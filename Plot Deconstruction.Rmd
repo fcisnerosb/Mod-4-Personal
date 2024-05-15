@@ -1,0 +1,52 @@
+---
+title: 'Assigment: Plot deconstruction'
+author: "Fernando Cisneros & Maria Paula Muñoz"
+date: "2024-05-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+## R Markdown
+
+## Plot deconstruction: Plastic Ingestion in Post-hatchling Sea Turtles: Assessing a Major Threat in Florida Near Shore Waters
+
+```{r}
+library(readxl)
+st <- read_excel("st.xlsx")
+View(st)
+```
+
+# Transform to log 
+
+```{r}
+st$log_total <- log(st$total + 1)  # Adding 1 to avoid log(0)
+
+```
+
+
+
+
+# Making the new graph
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+ggplot(st, aes(x = type, y = log_total)) + 
+  geom_bar(stat = "identity") +  xlab("Type of Plastic Ingested") +
+  ylab("Logarithmic Total") 
+```
+
+
+
+Comments para la grafica, el pie chart no da uncertanty o variabilidad. No nos deja ver SE, media y error bars. Explicar en la nueva data que seria bueno agregarlo en el bar chart. 
+log-scale the Y axis. 
+
+
+
