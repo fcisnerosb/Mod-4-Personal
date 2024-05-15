@@ -239,7 +239,26 @@ Question: what does the "se = FALSE" do?
 2.  Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.
 
 ```{r}
+## geom to draw a line chart
+## ?geom_line() --> geom_line() connects them in order of the variable on the x axis. geom_step() creates a stairstep plot, highlighting exactly when changes occur. The group aesthetic determines which cases are connected together.
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_line()
 
+## geom to draw a boxplot
+## ?geom_boxplot() --> The boxplot compactly displays the distribution of a continuous variable. It visualises five summary statistics (the median, two hinges and two whiskers), and all "outlying" points individually.
+ggplot(data = mpg, aes(x = class, y = cty)) +
+  geom_boxplot()
+
+## geom to dram a histogram 
+## ?geom_histogram() --> Visualise the distribution of a single continuous variable by dividing the x axis into bins and counting the number of observations in each bin. Histograms (geom_histogram()) display the counts with bars; frequency polygons (geom_freqpoly()) display the counts with lines. Frequency polygons are more suitable when you want to compare the distribution across the levels of a categorical variable.
+ggplot(data = mpg, aes(x = cty)) +
+  geom_histogram()
+
+
+## geom to dram an area chart
+## ?geom_area()
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_area()
 ```
 
 
