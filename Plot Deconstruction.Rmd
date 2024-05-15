@@ -30,6 +30,11 @@ st$log_total <- log(st$total + 1)  # Adding 1 to avoid log(0)
 
 ```
 
+```{r}
+# Reorder the factor levels of 'type' based on 'total' values in descending order
+st$type <- factor(st$type, levels = st$type[order(st$total, decreasing = TRUE)])
+```
+
 
 
 
@@ -39,9 +44,25 @@ st$log_total <- log(st$total + 1)  # Adding 1 to avoid log(0)
 library(tidyverse)
 library(ggplot2)
 ggplot(st, aes(x = type, y = log_total)) + 
-  geom_bar(stat = "identity") +  xlab("Type of Plastic Ingested") +
-  ylab("Logarithmic Total") 
+  geom_bar(stat = "identity", fill = "black") +  xlab("Type of Plastic Ingested") +
+  ylab("Logarithmic Total") + theme_minimal() 
 ```
+```{r}
+ggplot(st, aes(x = type, y = log_total)) + 
+  geom_bar(stat = "identity", fill = "grey30", color = "black") +  # Set bars to grey with black borders
+  xlab("Type of Plastic Ingested") +  # Adding x-axis label
+  ylab("Logarithmic Total") +  # Adding y-axis label
+  theme_classic() +  # Use a classic theme for a clean look
+  theme(
+    panel.grid.major = element_line(color = "grey80"),  # Major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    axis.text = element_text(size = 12),  # Adjust axis text size
+    axis.title = element_text(size = 14, face = "bold"),  # Adjust axis title size and style
+    axis.title.x = element_text(margin = margin(t = 10)),  # Add margin to the top of x-axis title
+    axis.title.y = element_text(margin = margin(r = 10))   # Add margin to the right of y-axis title
+  )
+```
+
 
 
 
