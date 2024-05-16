@@ -14,3 +14,34 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+```{r}
+table1
+table2
+table3
+```
+
+
+```{r}
+# Compute rate per 10,000
+table1 %>%
+  mutate(rate = cases / population * 10000)
+
+table1 %>%
+  count(year, wt = cases)
+
+library(ggplot2)
+ggplot(table1, aes(year, cases)) +
+  geom_line(aes(group = country), colour = "grey50") +
+  geom_point(aes(colour = country))
+```
+## Exercises
+```{r}
+
+```
+
+
+## 4.5.1 Lengthening datasets
+```{r}
+
+```
+
