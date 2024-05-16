@@ -1,0 +1,20 @@
+---
+title: "Assigment: End-to-end data analysis in R"
+author: "Fernando Cisneros"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## End to end data analysis in R
+
+## Shark Control Program
+```{r}
+library(readxl)
+sharks <- read_excel("~/Desktop/JCU/Data analysis/Mod 4 Personal/data/sharks.xlsx")
+View(sharks)
+```
+
