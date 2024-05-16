@@ -258,3 +258,131 @@ students <- read_csv("https://pos.it/r4ds-students-csv", na = c("N/A", ""))
 students
 ```
 
+## 4.8.1 What is relational data?
+```{r}
+library(tidyverse) 
+#install.packages("nycflights13")
+library(nycflights13)
+```
+
+```{r}
+airlines
+```
+
+```{r}
+airports
+```
+
+## 4.6.1 Joining datasets
+```{r}
+planes %>%
+  count(tailnum) %>%
+  filter(n > 1)
+weather %>%
+  count(year, month, day, hour, origin) %>%
+  filter(n > 1)
+```
+
+```{r}
+flights %>%
+  count(year, month, day, flight) %>%
+  filter(n > 1)
+flights %>%
+  count(year, month, day, tailnum) %>%
+  filter(n > 1)
+```
+
+## 4.6.2 Mutating joins
+```{r}
+flights2 <- flights %>%
+  select(year:day, hour, origin, dest, tailnum, carrier)
+```
+
+
+```{r}
+flights2 %>%
+  select(-origin, -dest) %>%
+  left_join(airlines, by = "carrier")
+```
+
+```{r}
+flights2 %>%
+  select(-origin, -dest) %>%
+  mutate(name = airlines$name[match(carrier, airlines$carrier)])
+```
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+4, "y3" )
+```
+
+
+```{r}
+x %>%
+  inner_join(y, by = "key")
+```
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     1, "x4"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+2, "y2" )
+left_join(x, y, by = "key")
+```
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     3, "x4"
+)
+y <- tribble(
+  ~key, ~val_y,
+   1, "y1",
+     2, "y2",
+     2, "y3",
+     3, "y4"
+)
+left_join(x, y, by = "key")
+```
+
+```{r}
+flights2 %>%
+  left_join(weather)
+```
+
+```{r}
+flights2 %>%
+  left_join(planes, by = "tailnum")
+```
+
+```{r}
+flights2 %>%
+  left_join(airports, c("dest" = "faa"))
+
+flights2 %>%
+  left_join(airports, c("origin" = "faa"))
+
+
+```
+
+
+
