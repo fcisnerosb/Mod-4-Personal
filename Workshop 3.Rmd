@@ -42,6 +42,219 @@ ggplot(table1, aes(year, cases)) +
 
 ## 4.5.1 Lengthening datasets
 ```{r}
+billboard |>
+  pivot_longer(
+    cols = starts_with("wk"),
+    names_to = "week",
+    values_to = "rank"
+)
+```
 
+```{r}
+df <- tribble(
+  ~id,  ~bp1, ~bp2,
+   "A",  100,  120,
+   "B",  140,  115,
+   "C",  120,  125
+)
+```
+
+```{r}
+df |>
+  pivot_longer(
+    cols = bp1:bp2,
+    names_to = "measurement",
+    values_to = "value"
+)
+```
+
+## 4.5.3 Widening datasets
+```{r}
+cms_patient_experience
+```
+
+```{r}
+cms_patient_experience |>
+  distinct(measure_cd, measure_title)
+```
+
+```{r}
+cms_patient_experience |>
+  pivot_wider(
+     names_from = measure_cd,
+    values_from = prf_rate
+  )
+```
+
+```{r}
+cms_patient_experience |>
+  pivot_wider(
+    id_cols = starts_with("org"),
+    names_from = measure_cd,
+    values_from = prf_rate
+)
+```
+
+## 4.5.4 Pivoting wider
+```{r}
+df <- tribble(
+  ~id, ~measurement, ~value,
+  "A",        "bp1",    100,
+  "B",        "bp1",    140,
+  "B",        "bp2",    115,
+  "A",        "bp2",    120,
+  "A",        "bp3",    105
+)
+```
+
+
+```{r}
+df |>
+  pivot_wider(
+    names_from = measurement,
+    values_from = value
+  )
+
+```
+
+```{r}
+df |>
+  distinct(measurement) |>
+  pull()
+```
+
+```{r}
+df |>
+  select(-measurement, -value) |>
+  distinct()
+```
+
+```{r}
+df |>
+  select(-measurement, -value) |>
+  distinct() |>
+  mutate(x = NA, y = NA, z = NA)
+```
+
+##4.5.5 Exercises
+```{r}
+## 1. Why are pivot_longer() and pivot_wider() not perfectly symmetrical? Carefully consider the following example.
+stocks <- tibble(
+year = c(2015, 2015, 2016, 2016), half =c( 1, 2, 1, 2), return = c(1.88, 0.59, 0.92, 0.17)
+)
+stocks %>%
+pivot_wider(names_from = year, values_from = return) %>%
+  pivot_longer(`2015`:`2016`, names_to = "year", values_to =
+"return")
+```
+
+```{r}
+## 2. why does this code fail?
+table4a %>%
+  pivot_longer(c(1999, 2000), names_to = "year", values_to =
+"cases")
+```
+
+```{r}
+## 3. Consider the sample tibble below. Do you need to make it wider or longer? What are the variables?
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+
+## 4.5.6 Separating and uniting data tables
+```{r}
+table3
+```
+
+```{r}
+table3 %>%
+  separate(rate, into = c("cases", "population"))
+```
+
+```{r}
+table3 %>%
+  separate(rate, into = c("cases", "population"), sep = "/")
+```
+
+```{r}
+table3 %>%
+  separate(rate, into = c("cases", "population"), convert = TRUE)
+```
+
+```{r}
+table3 %>%
+  separate(year, into = c("century", "year"), sep = 2)
+```
+
+```{r}
+table5 %>%
+  unite(new, century, year, sep = "")
+```
+
+## Explicit missing values
+```{r}
+treatment <- tribble(
+  ~person,           ~treatment, ~response,
+  "Derrick Whitmore", 1,         7,
+  NA,                 2,         10,
+  NA,                 3,         NA,
+  "Katherine Burke",  1,         4
+)
+```
+
+
+```{r}
+treatment |>
+  fill(everything())
+```
+
+## 4.6.2 Fixed values
+```{r}
+x <- c(1, 4, 5, 7, NA)
+coalesce(x, 0)
+```
+
+```{r}
+x <- c(1, 4, 5, 7, -99)
+na_if(x, -99)
+```
+
+## 4.6.3 NaN
+```{r}
+x <- c(NA, NaN)
+x * 10
+x == 1
+is.na(x)
+```
+
+## 4.6.4 Implicit missing values
+```{r}
+stocks <- tibble(
+year = c(2020, 2020, 2020, 2020, 2021, 2021, 2021), qtr =c( 1, 2, 3, 4, 2, 3, 4), price = c(1.88, 0.59, 0.35, NA, 0.92, 0.17, 2.66)
+)
+```
+
+
+```{r}
+stocks |>
+  pivot_wider(
+     names_from = qtr,
+    values_from = price
+  )
+```
+
+## 4.7.1 CSV files
+```{r}
+? read_csv
+students <- read_csv("https://pos.it/r4ds-students-csv")
+```
+
+## 4.7.2 Practical advice
+```{r}
+students <- read_csv("https://pos.it/r4ds-students-csv", na = c("N/A", ""))
+students
 ```
 
