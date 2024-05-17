@@ -6,13 +6,22 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
 ```
 
 ## End to end data analysis in R
+## In this assignment, we will use real-world marine data collected as part of Queensland fisheries QFISH database to develop a report (either written on your website or via an R Markdown report embedded in your website) suitable for reporting to your manager, a community group or for your own research.
 
 ## Shark Control Program
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+## the data was downloaded from the following link: https://qfish.fisheries.qld.gov.au/query/number-caught-by-area-calendar-year-and-species-group/table.
+## the data selected was the shark control program by selecting the number caught by area, calendar year and species group offers a data table by species, year and region
+
+## 
 library(readxl)
 sharks <- read_excel("~/Desktop/JCU/Data analysis/Mod 4 Personal/data/sharks.xlsx")
 View(sharks)
