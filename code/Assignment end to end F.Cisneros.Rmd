@@ -19,8 +19,6 @@ knitr::opts_chunk$set(
 ## Upload packages
 ```{r}
 library(tidyverse)
-library(dplyr)
-library(ggplot2)
 ```
 
 
@@ -87,7 +85,7 @@ head(long_sharks)
 
 ## PLotting the data
 ```{r}
-ggplot(long_sharks, aes(x = CalendarYear, y = Count, color = black)) +
+ggplot(long_sharks, aes(x = CalendarYear, y = Count, color = "black")) +
   geom_line() +
   geom_point() +
   labs(
@@ -96,5 +94,28 @@ ggplot(long_sharks, aes(x = CalendarYear, y = Count, color = black)) +
     y = "Total Count"
   ) +
   theme_minimal()
+```
+
+
+```{r}
+# Reshaping data
+long_sharks <- sharks %>%
+  pivot_longer(
+    cols = -Area,
+    names_to = "Year",
+    values_to = "Count"
+  ) %>%
+  mutate(Year = as.integer(str_remove(Year, " Total")))
+
+# Plot
+ggplot(long_sharks, aes(x = Year, y = Count, color = Area)) +
+  geom_line() +
+  labs(title = "Shark Counts by Area Over Years",
+       x = "Year",
+       y = "Shark Count",
+       color = "Area") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
