@@ -34,7 +34,7 @@ View(sharks)
 ```
 
 ## Reshaping the data
-```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r message=TRUE, warning=TRUE, paged.print=TRUE}
 sharks <- data_frame(
    Area = c("Bribie Island", "Bundaberg", "Cairns", "Capricorn Coast", "Gladstone", "Gold Coast", "Mackay", "Nth Strandbroke Island", "Rainbow beach", "Sunshine Coast North", "Sunshine Coast South", "Sunshine Coast & Bribie Island", "Townsville"), 
    `2001 Total` = c(0, 75, 100, 90, 32, 155, 172, 26, 44, 115, 0, 48, 108),
@@ -79,7 +79,7 @@ long_sharks <- sharks %>%
 ```
 
 ##Inspect the data
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 head(long_sharks)
 ```
 
@@ -96,7 +96,7 @@ ggplot(long_sharks, aes(x = CalendarYear, y = Count, color = "black")) +
   theme_minimal()
 ```
 
-
+## Plotting a line graph
 ```{r}
 # Reshaping data
 long_sharks <- sharks %>%
